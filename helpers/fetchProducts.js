@@ -14,31 +14,3 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
-
-// id
-// site_id
-// title
-// seller
-// price
-// currency_id
-// available_quantity
-// sold_quantity
-// buying_mode
-// listing_type_id
-// stop_time
-// condition
-// permalink
-// thumbnail
-// accepts_mercadopago
-// installments
-// address
-// shipping
-// seller_address
-// attributes
-// differential_pricing
-// original_price
-// category_id
-// official_store_id
-// catalog_product_id
-// tags
-// catalog_listing
