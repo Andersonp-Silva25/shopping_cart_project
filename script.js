@@ -12,19 +12,6 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', () => productItem(sku));
-  
-  return section;
-};
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -39,6 +26,27 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const productItem = async (productId) => {
+  const items = document.querySelectorAll('.cart__items')[0];
+  const data = await fetchItem(productId);
+  const { id: sku, title: name, price: salePrice } = data;
+  const createLi = createCartItemElement({ sku, name, salePrice });
+  items.appendChild(createLi);
+};
+
+const createProductItemElement = ({ sku, name, image }) => {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', () => productItem(sku));
+  
+  return section;
+};
+
 const listProducts = async (product) => {
   const items = document.querySelector('.items');
   const data = await fetchProducts(product);
@@ -49,14 +57,6 @@ const listProducts = async (product) => {
     const createItem = createProductItemElement(objProduct);
     items.appendChild(createItem);
   });
-};
-
-const productItem = async (productId) => {
-  const items = document.querySelectorAll('.cart__items')[0];
-  const data = await fetchItem(productId);
-  const { id: sku, title: name, price: salePrice } = data;
-  const createLi = createCartItemElement({ sku, name, salePrice });
-  items.appendChild(createLi);
 };
 
 window.onload = () => { 
