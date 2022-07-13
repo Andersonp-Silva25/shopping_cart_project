@@ -32,6 +32,7 @@ const productItem = async (productId) => {
   const { id: sku, title: name, price: salePrice } = data;
   const createLi = createCartItemElement({ sku, name, salePrice });
   items.appendChild(createLi);
+  saveCartItems(items.innerHTML);
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -60,5 +61,6 @@ const listProducts = async (product) => {
 };
 
 window.onload = () => { 
-  listProducts('computador'); 
+  listProducts('computador');
+  // getSavedCartItems();
 };
