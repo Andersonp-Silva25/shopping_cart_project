@@ -14,7 +14,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const totalPriceInCart = async () => {
   const totalPrice = document.querySelector('.total-price');
@@ -24,8 +24,12 @@ const totalPriceInCart = async () => {
     const price = JSON.parse(item.innerHTML.split('$')[1]);
     arrayPrice.push(price);
   });
-  const total = arrayPrice.reduce((acc, price) => acc + price, 0);
-  totalPrice.innerText = total;
+  if (listItems.innerHTML === '') {
+    totalPrice.innerText = '';
+  } else {
+    const total = arrayPrice.reduce((acc, price) => acc + price, 0);
+    totalPrice.innerText = total;
+  }
 };
 
 const cartItemClickListener = (event) => {
@@ -86,8 +90,10 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const listProducts = async (product) => {
+  const loading = document.querySelector('.loading');
   const items = document.querySelector('.items');
   const data = await fetchProducts(product);
+  loading.remove();
   const { results } = data;
   results.forEach((element) => {
     const { id, title, thumbnail } = element;
