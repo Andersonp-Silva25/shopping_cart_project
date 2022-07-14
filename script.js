@@ -21,6 +21,14 @@ const cartItemClickListener = (event) => {
   saveCartItems(listItems.innerHTML);
 };
 
+const cleanCart = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
+    localStorage.removeItem('cartItems');
+    listItems.innerHTML = '';
+  });
+};
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -78,4 +86,5 @@ window.onload = () => {
   listProducts('computador');
   recoverLocalStorage();
   addClickInElementsLocalStorage();
+  cleanCart();
 };
